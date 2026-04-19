@@ -1,27 +1,22 @@
+from preprocessing import load_image
 from eigen_module import compute_eigen
 
+
 def main():
-    # Dummy matrix (replace later)
-    A = [
-        [1, 2],
-        [3, 4]
-    ]
+    # Step 1: Load image → matrix
+    A = load_image("test.jpg")
 
-    print("Input Matrix:")
-    print(A)
+    print("Image matrix shape:", A.shape)
 
-    # Call your module
+    # Step 2: Compute eigen
     values, vectors = compute_eigen(A)
 
     print("\nEigenvalues:")
     print(values)
 
-    print("\nEigenvectors:")
-    print(vectors)
+    print("\nEigenvectors shape:")
+    print(vectors.shape)
 
 
 if __name__ == "__main__":
-    main()from preprocessing import load_image
-
-A = load_image("test.jpg")
-print("Image matrix shape:", A.shape)
+    main()
