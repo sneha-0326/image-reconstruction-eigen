@@ -1,16 +1,32 @@
 import numpy as np
 
 def compute_eigen(A):
-    A = np.array(A)
+    """
+    Compute eigenvalues and eigenvectors of A^T A
+    """
 
-    if A.shape[0] != A.shape[1]:
-        raise ValueError("Matrix must be square")
+    # Step 1: Compute A^T A
+    ATA = A.T @ A
 
-    values, vectors = np.linalg.eig(A)
+    # Step 2: Eigen decomposition (since ATA is symmetric)
+    eigenvalues, eigenvectors = np.linalg.eigh(ATA)
 
-    # Sort descending
-    idx = values.argsort()[::-1]
-    values = values[idx]
-    vectors = vectors[:, idx]
+    # Step 3: Sort in descending order
+    idx = np.argsort(eigenvalues)[::-1]
+    eigenvalues = eigenvalues[idx]
+    eigenvectors = eigenvectors[:, idx]
 
-    return values, vectors
+    return eigenvalues, eigenvectors
+
+
+def select_top_k(eigenvalues, eigenvectors, k):
+    """
+    Select top k eigenvalues and eigenvectors
+    """
+
+    k = min(k, eigenvectors.shape[1])  # safety check
+
+    top_k_values = eigenvalues[:k]
+    top_k_vectors = eigenvectors[:, :k]
+
+    return top_k_values, top_k_vectors
